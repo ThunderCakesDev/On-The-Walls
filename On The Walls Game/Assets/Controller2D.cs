@@ -36,13 +36,12 @@ public class Controller2D : MonoBehaviour {
         VerticalCollisions (ref velocity);
 
         transform.Translate(velocity);
-        Debug.Log(collisions.below);
     }
 
     void VerticalCollisions(ref Vector3 velocity)
     {
-
-        float directionY = Mathf.Sign(velocity.y);
+     
+        float directionY = Mathf.Sign(velocity.y);       
         float rayLenght = Mathf.Abs(velocity.y) + skinWidth;
 
         for (int i = 0; i < verticalRayCount; i++)
@@ -51,18 +50,20 @@ public class Controller2D : MonoBehaviour {
             rayOrigin += Vector3.right * (verticalRaySpacing * i + velocity.x);
             RaycastHit hit;
             Ray ray = new Ray(rayOrigin, Vector3.up * directionY);
-            bool ishit = Physics.Raycast(ray, out hit, rayLenght, collisionMask);
+            bool isHit = Physics.Raycast(ray, out hit, rayLenght, collisionMask);
 
             Debug.DrawRay(rayOrigin, Vector3.up * directionY * rayLenght, Color.red);
-
-            if (ishit)
+            if (isHit)
             {
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLenght = hit.distance;
 
                 collisions.below = directionY == -1;
                 collisions.above = directionY == 1;
+                Debug.Log("Below- " + collisions.below + " Above- " + collisions.above);
             }
+            else
+                collisions.Reset();
         }
     }
 
