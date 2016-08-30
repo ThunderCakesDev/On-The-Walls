@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (Controller2D))]
+//[RequireComponent (typeof (Controller2D))]
 public class Player : MonoBehaviour {
 
     public float moveSpeed = 6;
